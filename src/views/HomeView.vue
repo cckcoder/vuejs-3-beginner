@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const count = ref(0)
 const title = ref('My Counter App')
@@ -11,6 +11,15 @@ const increment = (amount) => {
 const decrement = (amount) => {
     count.value -= amount
 }
+
+const oddOrEvent = computed(() => {
+    if (count.value % 2 == 0) return 'event'
+    return 'odd'
+})
+
+const doubleNumber = computed(() => {
+    return count.value * 2
+})
 
 </script>
 
@@ -37,6 +46,9 @@ const decrement = (amount) => {
                 name="title-model"
             >
         </div>
+        <h3>The number is: {{ oddOrEvent }}</h3>
+        <hr>
+        <h3>Double Number is: {{ doubleNumber }}</h3>
     </div>
 </template>
 
