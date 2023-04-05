@@ -1,26 +1,15 @@
-<script>
+<script setup>
 import { ref } from 'vue'
 
-export default {
-    setup() {
-        const count = ref(0)
-        const title = ref('My Counter App')
+const count = ref(0)
+const title = ref('My Counter App')
 
-        const increment = () => {
-            count.value++
-        }
+const increment = () => {
+    count.value++
+}
 
-        const decrement = () => {
-            count.value--
-        }
-
-        return {
-            count,
-            increment,
-            decrement,
-            title
-        }
-    }
+const decrement = () => {
+    count.value--
 }
 
 </script>
@@ -36,6 +25,18 @@ export default {
             <button class="btn-counter" @click="increment">+</button>
             <button class="btn-counter">++</button>
         </div>
+        <div>
+            <input 
+                v-model="title"
+                type="text" 
+                name="title-model"
+            >
+            <input 
+                v-model.number="count"
+                type="number" 
+                name="title-model"
+            >
+        </div>
     </div>
 </template>
 
@@ -50,5 +51,11 @@ export default {
 
 .btn-counter {
     margin: 3px;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
 }
 </style>
