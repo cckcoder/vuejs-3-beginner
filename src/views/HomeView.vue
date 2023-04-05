@@ -4,12 +4,12 @@ import { ref } from 'vue'
 const count = ref(0)
 const title = ref('My Counter App')
 
-const increment = () => {
-    count.value++
+const increment = (amount) => {
+    count.value += amount
 }
 
-const decrement = () => {
-    count.value--
+const decrement = (amount) => {
+    count.value -= amount
 }
 
 </script>
@@ -19,11 +19,11 @@ const decrement = () => {
         <h1>Welcome Home</h1>
         <h2>{{ title }}</h2>
         <div>
-            <button class="btn-counter">--</button>
-            <button class="btn-counter" @click="decrement">-</button>
+            <button class="btn-counter" @click="decrement(3)">--</button>
+            <button class="btn-counter" @click="decrement(1)">-</button>
             {{ count }} 
-            <button class="btn-counter" @click="increment">+</button>
-            <button class="btn-counter">++</button>
+            <button class="btn-counter" @click="increment(1)">+</button>
+            <button class="btn-counter" @click="increment(3)">++</button>
         </div>
         <div>
             <input 
