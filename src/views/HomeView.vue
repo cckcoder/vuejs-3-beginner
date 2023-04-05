@@ -1,19 +1,26 @@
 <script>
+import { ref } from 'vue'
+
 export default {
-    data() {
+    setup() {
+        const count = ref(0)
+        const title = ref('My Counter App')
+
+        const increment = () => {
+            count.value++
+        }
+
+        const decrement = () => {
+            count.value--
+        }
+
         return {
-            count: 5,
-            title: 'My Counter App'
+            count,
+            increment,
+            decrement,
+            title
         }
-    },
-    methods: {
-        increment() {
-            this.count++
-        },
-        decrement() {
-            this.count--
-        }
-    },
+    }
 }
 
 </script>
