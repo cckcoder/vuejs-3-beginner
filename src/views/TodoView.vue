@@ -1,9 +1,25 @@
 <template>
   <div>
     <h1>My Todo List</h1>
+    <form @submit.prevent="submitTodo">
+      <input 
+        type="text" 
+        v-model="todoData.title" 
+        placeholder="Add title here"
+      >
+      <textarea  
+        style="width: 100%;"
+        v-model="todoData.descript"
+        placeholder="Add Description here"
+      >
+      </textarea>
+      <button class="btn-submit">Submit</button>
+    </form>
+
+    <hr>
     <ul>
       <li 
-        v-for="(todo, index) in todos" 
+        v-for="(todo, index) in sortTodos" 
         :key="todo.id"
         @click="handleToggle(index)"
         :class="{ 'task-done': todo.isComplete }"
@@ -16,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const todos = ref([
   { id: 1, title: 'Drink Coffee', descript: 'Awesome', isComplete: false },
@@ -24,9 +40,27 @@ const todos = ref([
   { id: 3, title: 'Play with cat', descript: 'Cat is my lovely pet!', isComplete: false },
 ])
 
-const handleToggle = (index) => {
+const sortTodos = computed(() => {
+  return todos.value.reverse()
+})
 
+const todoData = ref({
+  title: '',
+  descript: ''
+})
+
+const handleToggle = (index) => {
   todos.value[index].isComplete = !todos.value[index].isComplete
+}
+
+const submitTodo = () => {
+
+  todos.value.push(todoData.value)
+
+  todoData.value = ref({
+    title: '',
+    descript: ''
+  })
 }
 </script>
 
@@ -41,6 +75,12 @@ li {
 
 .task-done {
   text-decoration: line-through;
+}
+
+.btn-submit {
+  margin: 5px;
+  padding: 5px;
+  width: 100%;
 }
 
 </style>
