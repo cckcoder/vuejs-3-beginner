@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import TodoDetail from '@/components/TodoDetail.vue'
 
 const todos = ref([
@@ -38,26 +38,36 @@ const todos = ref([
 ])
 
 const sortTodos = computed(() => {
-  return todos.value.reverse()
+  return todos.value.slice().reverse()
 })
 
-const todoData = ref({
+const todoData = reactive({
   title: '',
   descript: ''
 })
 
-const handleToggle = (index) => {
-  todos.value[index].isComplete = !todos.value[index].isComplete
+const handleToggle = (id) => {
+  
+  todos.value.map((todo) => {
+    if(todo.id === id) {
+      todo.isComplete = !todo.isComplete
+    }
+  })
+
+  //todos.value[index].isComplete = !todos.value[index].isComplete
 }
 
 const submitTodo = () => {
+  const id = todos.value.length + 1
 
-  todos.value.push(todoData.value)
-
-  todoData.value = ref({
-    title: '',
-    descript: ''
+  todos.value.push({
+    id: id,
+    title: todoData.title,
+    descript: todoData.descript,
   })
+
+  todoData.title = ''
+  todoData.descript = ''
 }
 </script>
 

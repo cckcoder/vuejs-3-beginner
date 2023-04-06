@@ -1,9 +1,9 @@
 <template>
     <ul>
       <li 
-        v-for="(todo, index) in sortTodos" 
+        v-for="todo in sortTodos" 
         :key="todo.id"
-        @click="$emit('handleActive', index)"
+        @click="$emit('handleActive', todo.id)"
         :class="{ 'task-done': todo.isComplete }"
       >
         {{ todo.title }} -- 
