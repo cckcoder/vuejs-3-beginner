@@ -20,6 +20,7 @@
 
     <TodoDetail
       :sortTodos=sortTodos 
+      @handleActive=handleToggle
     >
     </TodoDetail>
 
@@ -60,7 +61,7 @@ const submitTodo = () => {
 }
 </script>
 
-<style scoped>
+<style>
 ul {
   cursor: pointer;
 }

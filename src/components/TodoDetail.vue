@@ -3,7 +3,7 @@
       <li 
         v-for="(todo, index) in sortTodos" 
         :key="todo.id"
-        @click="handleToggle(index)"
+        @click="$emit('handleActive', index)"
         :class="{ 'task-done': todo.isComplete }"
       >
         {{ todo.title }} -- 
@@ -13,10 +13,16 @@
 </template>
 
 <script setup>
- defineProps({
+
+defineProps({
   sortTodos: {
     type: Object,
     required: true
   }
- }) 
+}) 
+
+defineEmits([
+  'handleActive'
+])
+
 </script>
