@@ -18,18 +18,18 @@
 
     <hr>
 
-    <TodoDetail
+    <TodoList
       :sortTodos=sortTodos 
       @handleActive=handleToggle
     >
-    </TodoDetail>
+    </TodoList>
 
   </div>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from 'vue'
-import TodoDetail from '@/components/TodoDetail.vue'
+import TodoList from '@/components/TodoList.vue'
 
 const todos = ref([
   { id: 1, title: 'Drink Coffee', descript: 'Awesome', isComplete: false },
