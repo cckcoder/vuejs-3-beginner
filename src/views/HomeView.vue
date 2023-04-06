@@ -1,5 +1,17 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUpdated, onUnmounted, watchEffect } from 'vue'
+
+onMounted(() => {
+  console.log('onMounted')
+})
+
+onUpdated(() => {
+  console.log('onUpdated')
+})
+
+onUnmounted(() => {
+  console.log('onUnmounted')
+})
 
 const count = ref(0)
 const title = ref('My Counter App')
