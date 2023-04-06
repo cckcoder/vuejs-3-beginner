@@ -3,9 +3,10 @@
     <h1>My Todo List</h1>
     <ul>
       <li 
-        v-for="todo in todos" 
+        v-for="(todo, index) in todos" 
         :key="todo.id"
-        @click="handleToggle(todo.id)"
+        @click="handleToggle(index)"
+        :class="{ 'task-done': todo.isComplete }"
       >
         {{ todo.title }} -- 
         <span>{{ todo.descript }}</span>
@@ -23,8 +24,9 @@ const todos = ref([
   { id: 3, title: 'Play with cat', descript: 'Cat is my lovely pet!', isComplete: false },
 ])
 
-const handleToggle = (todoId) => {
-  console.log(todoId)
+const handleToggle = (index) => {
+
+  todos.value[index].isComplete = !todos.value[index].isComplete
 }
 </script>
 
@@ -35,6 +37,10 @@ ul {
 
 li {
   padding: 5px;
+}
+
+.task-done {
+  text-decoration: line-through;
 }
 
 </style>
