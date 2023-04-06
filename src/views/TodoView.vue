@@ -17,22 +17,18 @@
     </form>
 
     <hr>
-    <ul>
-      <li 
-        v-for="(todo, index) in sortTodos" 
-        :key="todo.id"
-        @click="handleToggle(index)"
-        :class="{ 'task-done': todo.isComplete }"
-      >
-        {{ todo.title }} -- 
-        <span>{{ todo.descript }}</span>
-      </li>
-    </ul>
+
+    <TodoDetail
+      :sortTodos=sortTodos 
+    >
+    </TodoDetail>
+
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+import TodoDetail from '@/components/TodoDetail.vue'
 
 const todos = ref([
   { id: 1, title: 'Drink Coffee', descript: 'Awesome', isComplete: false },

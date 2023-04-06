@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUpdated, onUnmounted, watchEffect } from 'vue'
+import { ref, computed, onMounted, onUpdated, onUnmounted } from 'vue'
 
 onMounted(() => {
   console.log('onMounted')
