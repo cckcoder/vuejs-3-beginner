@@ -10,6 +10,7 @@ export const useTodoStore = defineStore('todo', () => {
   ])
 
   const todoId = ref(0)
+  const isActive = ref(false)
 
   const sortTodos = computed(() => {
     return todos.value.slice().reverse()
@@ -46,6 +47,22 @@ export const useTodoStore = defineStore('todo', () => {
     todoData.descript = ''
   }
 
+  const submitEditTodo = () => {
+    console.log(getTodoById.value.id)
+    todos.value.map((todo) => {
+      if(todo.id === getTodoById.value.id) {
+        todo.title = getTodoById.value.title
+        todo.descript = getTodoById.value.descript
+      }
+    })
+
+    isActive.value = true
+    setInterval(() => {
+      isActive.value = !isActive.value 
+    }, 3000);
+    
+  }
+
   const delTodo = (id) => {
     todos.value = todos.value.filter((todo) => todo.id !== id)
   }
@@ -59,5 +76,7 @@ export const useTodoStore = defineStore('todo', () => {
     getTodoById,
     todoId,
     delTodo,
+    submitEditTodo,
+    isActive
   }
 })

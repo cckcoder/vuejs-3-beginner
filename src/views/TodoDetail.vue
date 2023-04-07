@@ -5,20 +5,32 @@
     <p>Display the content of post with ID {{ $route.params.id }}</p>
 
     <div v-if="store.getTodoById.title">
-      <p>{{ store.getTodoById.title }}</p>
-      <p>{{ store.getTodoById.descript }}</p>
+      <form @submit.prevent="store.submitEditTodo">
+        <input 
+          type="text" 
+          v-model="store.getTodoById.title"
+        >
+        <input 
+          type="text" 
+          v-model="store.getTodoById.descript"
+        >
+        <button class="btn-edit">Submit Edit</button>
+        <p v-if="store.isActive"
+          class="info"
+        >Update Successfully!!</p>
+      </form>
     </div>
-    <div>
-      <button @click="goHome">Go home</button>
-      <button @click="goPrevious">Previous Page</button>
-    </div>
+
+    <hr>
+    <NavBottom></NavBottom>
   </div>
 </template>
 
 <script setup>
 import {  onBeforeMount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useTodoStore } from '@/stores/todo.js'
+import { useRoute } from 'vue-router'
+import NavBottom from '@/components/NavBottom.vue'
 
 onBeforeMount(() => {
   store.todoId = parseInt(route.params.id)
@@ -27,16 +39,25 @@ onBeforeMount(() => {
 const store = useTodoStore()
 
 const route = useRoute()
-const router = useRouter()
   
-const goHome = () => router.push({ name: 'home' })
-
-const goPrevious = () => router.go(-1)
 
 </script>
 
-<style scoped>
+<style>
 button {
   margin-right: 5px;
 } 
+
+.btn-edit {
+  width: 100%;
+  padding: 5px;
+  background-color: skyblue;
+  font-weight: bold;
+}
+
+.info {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
 </style>
