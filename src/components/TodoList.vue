@@ -1,36 +1,35 @@
 <template>
     <ul>
       <li 
-        v-for="todo in sortTodos" 
+        v-for="todo in store.sortTodos" 
         :key="todo.id"
         :class="{ 'task-done': todo.isComplete }"
       >
         {{ todo.title }} -- 
         <span>
-          <a @click="$emit('handleActive', todo.id)">
+          <a @click="store.handleToggle(todo.id)">
             &check;
           </a>
           &#124;
           <RouterLink :to="{ name: 'todo-detail', params: { id: todo.id } }">
-            Edit
+            Detail
           </RouterLink>
+          &#124;
+          <a 
+            @click="store.delTodo(todo.id)"
+            class="del-todo"
+          >
+            &cross;
+          </a>
         </span>
       </li>
     </ul>
 </template>
 
 <script setup>
+import { useTodoStore } from '@/stores/todo.js'
 
-defineProps({
-  sortTodos: {
-    type: Object,
-    required: true
-  }
-}) 
-
-defineEmits([
-  'handleActive'
-])
+const store = useTodoStore()
 
 </script>
 
@@ -41,6 +40,10 @@ ul {
 
 span {
   padding: 2px;
+}
+
+.del-todo {
+  color: tomato;
 }
 
 </style>

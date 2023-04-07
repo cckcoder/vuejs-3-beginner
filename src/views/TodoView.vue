@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1>My Todo List</h1>
-    <form @submit.prevent="submitTodo">
+    <form @submit.prevent="store.submitTodo">
       <input 
         type="text" 
-        v-model="todoData.title" 
+        v-model="store.todoData.title" 
         placeholder="Add title here"
       >
       <textarea  
         style="width: 100%;"
-        v-model="todoData.descript"
+        v-model="store.todoData.descript"
         placeholder="Add Description here"
       >
       </textarea>
@@ -18,57 +18,17 @@
 
     <hr>
 
-    <TodoList
-      :sortTodos=sortTodos 
-      @handleActive=handleToggle
-    >
-    </TodoList>
+    <TodoList></TodoList>
 
   </div>
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
 import TodoList from '@/components/TodoList.vue'
+import { useTodoStore } from '@/stores/todo.js'
 
-const todos = ref([
-  { id: 1, title: 'Drink Coffee', descript: 'Awesome', isComplete: false },
-  { id: 2, title: 'Learn Vue3', descript: 'Vue js very cool', isComplete: false },
-  { id: 3, title: 'Play with cat', descript: 'Cat is my lovely pet!', isComplete: false },
-])
+const store = useTodoStore()
 
-const sortTodos = computed(() => {
-  return todos.value.slice().reverse()
-})
-
-const todoData = reactive({
-  title: '',
-  descript: ''
-})
-
-const handleToggle = (id) => {
-  
-  todos.value.map((todo) => {
-    if(todo.id === id) {
-      todo.isComplete = !todo.isComplete
-    }
-  })
-
-  //todos.value[index].isComplete = !todos.value[index].isComplete
-}
-
-const submitTodo = () => {
-  const id = todos.value.length + 1
-
-  todos.value.push({
-    id: id,
-    title: todoData.title,
-    descript: todoData.descript,
-  })
-
-  todoData.title = ''
-  todoData.descript = ''
-}
 </script>
 
 <style>
