@@ -3,7 +3,7 @@
       <li 
         v-for="todo in store.sortTodos" 
         :key="todo.id"
-        :class="{ 'task-done': todo.isComplete }"
+        :class="{ 'task-done': todo.is_complete }"
       >
         {{ todo.title }} -- 
         <span>

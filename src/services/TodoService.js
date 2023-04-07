@@ -12,5 +12,15 @@ const apiClient = axios.create({
 export default {
   getTodo() {
     return apiClient.get('/')
+  },
+  toggleCompleted(id) {
+    return apiClient.get('/' + id)
+  },
+  postTodo(todoObj) {
+    console.log(todoObj)
+    return apiClient.post('/', todoObj)
+  },
+  putTodo(todoObj) {
+    return apiClient.put('/' + todoObj.id, todoObj)
   }
 }

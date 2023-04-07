@@ -1,20 +1,27 @@
 import { ref, reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
+import TodoService from '../services/TodoService'
 
 
 export const useTodoStore = defineStore('todo', () => {
-  const todos = ref([
-    { id: 1, title: 'Drink Coffee', descript: 'Awesome', isComplete: false },
-    { id: 2, title: 'Learn Vue3', descript: 'Vue js very cool', isComplete: false },
-    { id: 3, title: 'Play with cat', descript: 'Cat is my lovely pet!', isComplete: false },
-  ])
+  const todos = ref([])
 
   const todoId = ref(0)
   const isActive = ref(false)
 
   const sortTodos = computed(() => {
-    return todos.value.slice().reverse()
+    return todos.value.reverse()
   })
+
+  const getTodos = () => {
+    TodoService.getTodo()
+    .then((resp) => {
+      todos.value = resp.data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
 
   const getTodoById = computed(() => {
     return todos.value.find((todo) => todo.id === todoId.value)
@@ -22,29 +29,30 @@ export const useTodoStore = defineStore('todo', () => {
 
   const todoData = reactive({
     title: '',
-    descript: ''
+    description: ''
   })
 
   const handleToggle = (id) => {
     
-    todos.value.map((todo) => {
-      if(todo.id === id) {
-        todo.isComplete = !todo.isComplete
-      }
-    })
+    const todoObj = todos.value.find((todo) => todo.id === id)
+    todoObj.is_complete = !todoObj.is_complete
+    TodoService.putTodo(todoObj)
   }
 
   const submitTodo = () => {
-    const id = todos.value.length + 1
-
-    todos.value.push({
-      id: id,
+    const todoObj = {
       title: todoData.title,
-      descript: todoData.descript,
+      description: todoData.description,
+      is_complete: false
+    }
+
+    TodoService.postTodo(todoObj)
+    .then((resp) =>{
+      todos.value.push(resp.data)
     })
 
     todoData.title = ''
-    todoData.descript = ''
+    todoData.description = ''
   }
 
   const submitEditTodo = () => {
@@ -77,6 +85,7 @@ export const useTodoStore = defineStore('todo', () => {
     todoId,
     delTodo,
     submitEditTodo,
-    isActive
+    isActive,
+    getTodos
   }
 })

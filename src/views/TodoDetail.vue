@@ -12,7 +12,7 @@
         >
         <input 
           type="text" 
-          v-model="store.getTodoById.descript"
+          v-model="store.getTodoById.description"
         >
         <button class="btn-edit">Submit Edit</button>
         <p v-if="store.isActive"

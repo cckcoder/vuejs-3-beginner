@@ -9,7 +9,7 @@
       >
       <textarea  
         style="width: 100%;"
-        v-model="store.todoData.descript"
+        v-model="store.todoData.description"
         placeholder="Add Description here"
       >
       </textarea>
@@ -24,10 +24,18 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import TodoList from '@/components/TodoList.vue'
 import { useTodoStore } from '@/stores/todo.js'
 
 const store = useTodoStore()
+
+onMounted(() => {
+  store.getTodos()
+})
+
+
+
 
 </script>
 
