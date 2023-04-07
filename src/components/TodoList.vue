@@ -3,11 +3,18 @@
       <li 
         v-for="todo in sortTodos" 
         :key="todo.id"
-        @click="$emit('handleActive', todo.id)"
         :class="{ 'task-done': todo.isComplete }"
       >
         {{ todo.title }} -- 
-        <span>{{ todo.descript }}</span>
+        <span>
+          <a @click="$emit('handleActive', todo.id)" >
+            &check;
+          </a>
+          &#124;
+          <RouterLink :to="`/todo/${todo.id}`">
+            Edit
+          </RouterLink>
+        </span>
       </li>
     </ul>
 </template>
@@ -26,3 +33,14 @@ defineEmits([
 ])
 
 </script>
+
+<style scoped>
+ul {
+  font-size: 20px;
+}
+
+span {
+  padding: 2px;
+}
+
+</style>
