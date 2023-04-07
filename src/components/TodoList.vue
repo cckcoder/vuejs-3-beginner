@@ -7,11 +7,11 @@
       >
         {{ todo.title }} -- 
         <span>
-          <a @click="$emit('handleActive', todo.id)" >
+          <a @click="$emit('handleActive', todo.id)">
             &check;
           </a>
           &#124;
-          <RouterLink :to="`/todo/${todo.id}`">
+          <RouterLink :to="{ name: 'todo-detail', params: { id: todo.id } }">
             Edit
           </RouterLink>
         </span>
