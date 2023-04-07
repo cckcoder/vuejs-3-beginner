@@ -33,7 +33,6 @@ export const useTodoStore = defineStore('todo', () => {
   })
 
   const handleToggle = (id) => {
-    
     const todoObj = todos.value.find((todo) => todo.id === id)
     todoObj.is_complete = !todoObj.is_complete
     TodoService.putTodo(todoObj)
@@ -56,23 +55,28 @@ export const useTodoStore = defineStore('todo', () => {
   }
 
   const submitEditTodo = () => {
-    console.log(getTodoById.value.id)
-    todos.value.map((todo) => {
-      if(todo.id === getTodoById.value.id) {
-        todo.title = getTodoById.value.title
-        todo.descript = getTodoById.value.descript
-      }
+    console.log(getTodoById.value)
+    TodoService.putTodo(getTodoById.value)
+    .then((resp) => {
+      console.log(resp.data)
     })
 
     isActive.value = true
     setInterval(() => {
       isActive.value = !isActive.value 
     }, 3000);
-    
   }
 
   const delTodo = (id) => {
-    todos.value = todos.value.filter((todo) => todo.id !== id)
+    TodoService.delTodo(id)
+    .then((resp) => {
+      if (resp.status == 200) {
+        todos.value = todos.value.filter((todo) => todo.id !== id)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
   return {
